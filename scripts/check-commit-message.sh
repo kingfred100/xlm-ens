@@ -25,7 +25,8 @@ MSG="$1"
 #   fix!: correct fee rounding in registrar
 #   chore: update dependencies
 TYPES="feat|fix|perf|refactor|docs|test|build|ci|chore|revert|security|style"
-PATTERN="^(${TYPES})(\([a-z0-9_/-]+\))?(!)?: .+"
+SCOPES="registry|registrar|resolver|auction|subdomain|nft|bridge|sdk|cli|common"
+PATTERN="^(${TYPES})(\((${SCOPES})\))?(!)?: .+"
 
 if [[ "$MSG" =~ $PATTERN ]]; then
   echo "OK: \"$MSG\""
@@ -40,9 +41,13 @@ ERROR: Commit message does not follow the Conventional Commits specification.
 Expected format:
   <type>[optional scope][optional !]: <short description>
 
-Allowed types: feat, fix, perf, refactor, docs, test, build, ci, chore,
-               revert, security, style
+Allowed types:
+  feat, fix, perf, refactor, docs, test, build, ci, chore, revert, security,
+  style
 
+Allowed scopes:
+  registry, registrar, resolver, auction, subdomain, nft, bridge, sdk, cli,
+  common
 Examples:
   feat(registry): add bulk-register endpoint
   fix(registrar): correct fee rounding for 1-character labels
