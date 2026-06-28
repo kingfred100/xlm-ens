@@ -1,8 +1,14 @@
 use crate::config::NetworkConfig;
+use crate::output::{emit, emit_error, OutputFormat};
 use anyhow::{anyhow, Context};
+use serde_json::json;
 use xlm_ns_sdk::client::XlmNsClient;
 
-pub async fn run_resolve(config: NetworkConfig, name: &str) -> anyhow::Result<()> {
+pub async fn run_resolve(
+    config: NetworkConfig,
+    output: OutputFormat,
+    name: &str,
+) -> anyhow::Result<()> {
     let client = XlmNsClient::new(
         config.rpc_url,
         Some(config.network_passphrase),
@@ -32,6 +38,12 @@ pub async fn run_resolve(config: NetworkConfig, name: &str) -> anyhow::Result<()
         }
         Ok(())
     } else {
-        Err(anyhow!("Name '{}' not found or has no resolution", name))
+        let message = format!("Name '{}' not found or has no resolution", name);
+        emit_error(
+            output,
+            &message,
+            json!({"error": message.clone(), "name": name}),
+        );
+        Err(anyhow!(message))
     }
 }
