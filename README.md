@@ -1,6 +1,5 @@
 # xlm-ns
 
-![CI Status](https://github.com/0xVida/xlm-ens/actions/workflows/ci.yml/badge.svg)
 
 `xlm-ns` is a Rust workspace for a Stellar name service where names like
 `timmy.xlm` behave as user-owned identifiers for accounts, apps, subdomains, and
